@@ -36,4 +36,6 @@ def index():
     attachments = [{"image_url": latex_url, "fallback": "Oops. Something went wrong."}]
     payload.update({"attachments": attachments})
 
+    slack.post_latex_to_webhook(payload)
+
     return "Success!", 200
