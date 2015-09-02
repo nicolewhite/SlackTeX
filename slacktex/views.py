@@ -27,12 +27,13 @@ def index():
         return "Unauthorized."
 
     latex = quote(latex)
-    url = "http://chart.apis.google.com/chart?cht=tx&chl={latex}".format(latex=latex)
+    latex_url = "http://chart.apis.google.com/chart?cht=tx&chl={latex}".format(latex=latex)
 
-    payload = {"text": url, "channel": channel_id}
+    payload = {"channel": channel_id}
     user = slack.find_user_info(user_id)
     payload.update(user)
 
-    slack.post_latex_to_webhook(payload)
+    attachments = [{"image_url": latex_url, "fallback": "Oops. Something went wrong."}]
+    payload.update({"attachments": attachments})
 
     return "Success!", 200
