@@ -1,5 +1,6 @@
 from flask import Flask, request
 from models import Slack
+from urllib import quote
 
 
 app = Flask(__name__)
@@ -25,6 +26,7 @@ def index():
     if token != slack.SLASH_COMMAND_TOKEN:
         return "Unauthorized."
 
+    latex = quote(latex)
     url = "http://chart.apis.google.com/chart?cht=tx&chl={latex}".format(latex=latex)
 
     payload = {"text": url, "channel": channel_id}
